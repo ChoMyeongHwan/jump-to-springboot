@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter // 교재대로 원활한 진행을 위해 임시로 Setter 사용(엔티티는 Setter 사용을 지양, 추후 변경)
@@ -23,5 +24,9 @@ public class Question {
     private String content;
 
     private LocalDateTime createDate;
+
+    // CascadeType.REMOVE: 질문을 삭제하면 그에 달린 답변들도 모두 함께 삭제하기 위해서 사용함
+    @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
+    private List<Answer> answerList;
 
 }
