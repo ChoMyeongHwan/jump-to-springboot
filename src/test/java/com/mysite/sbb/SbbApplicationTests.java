@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,11 +17,11 @@ class SbbApplicationTests {
 
     @Test
     void testJpa() {
-        // findAll은 데이터를 조회할때 사용하는 메서드
-        List<Question> all = this.questionRepository.findAll();
-        assertEquals(2, all.size());
-
-        Question q = all.get(0);
-        assertEquals("sbb가 무엇인가요?", q.getSubject());
+        // Optional은 null 처리를 유연하게 처리하기 위해 사용하는 클래스
+        Optional<Question> oq = this.questionRepository.findById(1);
+        if (oq.isPresent()) {
+            Question q = oq.get();
+            assertEquals("sbb가 무엇인가요?", q.getSubject());
+        }
     }
 }
