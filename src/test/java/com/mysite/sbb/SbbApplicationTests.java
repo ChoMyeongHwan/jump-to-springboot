@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,8 +16,10 @@ class SbbApplicationTests {
 
     @Test
     void testJpa() {
-        List<Question> qList = this.questionRepository.findBySubjectLike("sbb%");
-        Question q = qList.get(0);
-        assertEquals("sbb가 무엇인가요?", q.getSubject());
+        Optional<Question> oq = this.questionRepository.findById(1);
+        assertTrue(oq.isPresent()); // assertTrue(값)은 값이 true인지를 테스트
+        Question q = oq.get();
+        q.setSubject("수정된 제목");
+        this.questionRepository.save(q);
     }
 }
